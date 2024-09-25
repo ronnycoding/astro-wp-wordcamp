@@ -1,14 +1,6 @@
-# Astro Starter Kit: Minimal
+# Astro + WordPress Starter Kit
 
-```sh
-npm create astro@latest -- --template minimal
-```
-
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/astro/tree/latest/examples/minimal)
-[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/astro/tree/latest/examples/minimal)
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/withastro/astro?devcontainer_path=.devcontainer/minimal/devcontainer.json)
-
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+This project demonstrates how to use Astro with WordPress as a headless CMS, creating a fast, static site with dynamic content.
 
 ## 🚀 Project Structure
 
@@ -18,16 +10,18 @@ Inside of your Astro project, you'll see the following folders and files:
 /
 ├── public/
 ├── src/
+│   ├── layouts/
+│   │   └── Layout.astro
 │   └── pages/
-│       └── index.astro
+│       ├── index.astro
+│       └── [slug].astro
+├── docker-compose.yml
 └── package.json
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
-
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
-
-Any static assets, like images, can be placed in the `public/` directory.
+- `src/pages/index.astro`: The main page that fetches and displays a list of posts from WordPress.
+- `src/pages/[slug].astro`: A dynamic route for individual blog posts.
+- `docker-compose.yml`: Configuration for running WordPress and MariaDB locally.
 
 ## 🧞 Commands
 
@@ -39,9 +33,24 @@ All commands are run from the root of the project, from a terminal:
 | `npm run dev`             | Starts local dev server at `localhost:4321`      |
 | `npm run build`           | Build your production site to `./dist/`          |
 | `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+| `docker-compose up -d`    | Start WordPress and MariaDB containers           |
+| `docker-compose down`     | Stop and remove the containers                   |
+
+## 🔧 Configuration
+
+1. Start the WordPress environment:
+   ```
+   docker-compose up -d
+   ```
+2. Access WordPress at `http://localhost:8086` and set up your site.
+3. Update the API endpoint in `src/pages/index.astro` and `src/pages/[slug].astro` if necessary.
+
+## 🚀 Building and Deploying
+
+1. Run `npm run build` to generate your static site.
+2. Deploy the contents of the `dist/` directory to your hosting provider.
 
 ## 👀 Want to learn more?
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+- [Astro Documentation](https://docs.astro.build)
+- [WordPress REST API Handbook](https://developer.wordpress.org/rest-api/)
