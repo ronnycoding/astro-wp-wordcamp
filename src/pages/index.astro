@@ -1,16 +1,14 @@
 ---
-
+import Layout from "../layouts/Layout.astro";
+const res = await fetch("http://localhost:8086/wp-json/wp/v2/posts");
+const posts = await res.json();
 ---
-
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<Layout title="Astro + WordPress = Zero Js">
+ 	{
+    posts.map((post) => (
+      <h2 set:html={post.title.rendered} />
+      <p set:html={post.content.rendered} />
+      <a href={post.slug}>Read more</a>
+    ))
+  }
+<Layout/>

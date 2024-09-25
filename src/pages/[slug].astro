@@ -1,0 +1,27 @@
+---
+import Layout from "../layouts/Layout.astro";
+
+// if you want to fetch data at build time
+// const { slug } = Astro.params;
+// const res = await fetch(`http://localhost:8086/wp-json/wp/v2/posts?slug=${slug}`);
+// const [post] = await res.json();
+
+// for static paths
+export async function getStaticPaths() {
+  let data = await fetch("http://localhost:8086/wp-json/wp/v2/posts");
+  let posts = await data.json();
+
+  return posts.map((post) => ({
+    params: { slug: post.slug },
+    props: { post: post },
+  }));
+}
+
+const { post } = Astro.props;
+---
+
+<Layout title={post.title.rendered}>
+  <article>
+    <Fragment set:html={post.content.rendered} />
+  </article>
+</Layout>
