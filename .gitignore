@@ -22,3 +22,23 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+
+# Don't ignore everything in wp
+!/wp/*
+
+# Ignore everything in the wp directory
+/wp/*
+
+# But don't ignore wp-config.php
+!/wp/wp-config.php
+
+# if you want to add some plugins or files to the repo, you can do so here
+
+# Don't ignore the plugins directory
+#!/wp/plugins/
+
+# Ignore everything in the plugins directory
+#/wp/plugins/*
+
+# But don't ignore these specific directories
+#!/wp/plugins/register-acf-blocks/
