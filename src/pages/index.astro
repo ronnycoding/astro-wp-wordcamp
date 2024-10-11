@@ -1,14 +1,36 @@
 ---
 import Layout from "../layouts/Layout.astro";
-const res = await fetch("http://localhost:8086/wp-json/wp/v2/posts");
+const query = `
+  query GetPostsEdges {
+    posts {
+      edges {
+        node {
+          id
+          title
+          excerpt(format: RENDERED)
+          slug
+        }
+      }
+    }
+  }
+`;
+const res = await fetch("http://localhost:8086/graphql", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+  },
+  body: JSON.stringify({ query }),
+});
 const posts = await res.json();
 ---
+
 <Layout title="Astro + WordPress = Zero Js">
- 	{
-    posts.map((post) => (
-      <h2 set:html={post.title.rendered} />
-      <p set:html={post.content.rendered} />
-      <a href={post.slug}>Read more</a>
+  {
+    posts.data.posts.edges.map((post) => (
+      <h2>{post.node.title}</h2>
+      <Fragment set:html={post.node.excerpt} />
+      <a href={post.node.slug}>Read more</a>
     ))
   }
-<Layout/>
+  <Layout />
+</Layout>
