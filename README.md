@@ -1,3 +1,8 @@
+README.md
+
+2.03 KB • 57 extracted lines
+
+Formatting may be inconsistent from source.
 # Astro + WordPress Starter Kit
 
 This project demonstrates how to use Astro with WordPress as a headless CMS, creating a fast, static site with dynamic content.
@@ -53,4 +58,4 @@ All commands are run from the root of the project, from a terminal:
 ## 👀 Want to learn more?
 
 - [Astro Documentation](https://docs.astro.build)
-- [WordPress REST API Handbook](https://developer.wordpress.org/rest-api/)
+- [WPGraphql](https://www.wpgraphql.com/)
