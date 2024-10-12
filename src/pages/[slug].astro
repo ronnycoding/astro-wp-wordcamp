@@ -20,8 +20,127 @@ export async function getStaticPaths() {
 const { post } = Astro.props;
 ---
 
-<Layout title={post.title.rendered}>
+<style>
+  /* Article styles */
+  article {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    color: #333;
+  }
+
+  /* Headings */
+  article h1,
+  article h2,
+  article h3,
+  article h4,
+  article h5,
+  article h6 {
+    margin-top: 1.5em;
+    margin-bottom: 0.5em;
+    line-height: 1.2;
+    color: #2c3e50;
+  }
+
+  article h1 {
+    font-size: 2.5em;
+  }
+  article h2 {
+    font-size: 2em;
+  }
+  article h3 {
+    font-size: 1.75em;
+  }
+  article h4 {
+    font-size: 1.5em;
+  }
+  article h5 {
+    font-size: 1.25em;
+  }
+  article h6 {
+    font-size: 1em;
+  }
+
+  /* Paragraphs */
+  article p {
+    margin-bottom: 1em;
+  }
+
+  /* Lists */
+  article ul,
+  article ol {
+    margin-bottom: 1em;
+    padding-left: 30px;
+  }
+
+  /* Links */
+  article a {
+    color: #3498db;
+    text-decoration: none;
+  }
+
+  article a:hover {
+    text-decoration: underline;
+  }
+
+  /* Images */
+  article img {
+    max-width: 100%;
+    height: auto;
+    margin: 1em 0;
+  }
+
+  /* Blockquotes */
+  article blockquote {
+    margin: 1em 0;
+    padding: 10px 20px;
+    border-left: 5px solid #3498db;
+    background-color: #f8f9fa;
+    font-style: italic;
+  }
+
+  /* Code blocks */
+  article pre {
+    background-color: #f8f9fa;
+    border: 1px solid #e1e4e8;
+    border-radius: 4px;
+    padding: 15px;
+    overflow-x: auto;
+    font-family: "Courier New", Courier, monospace;
+  }
+
+  article code {
+    background-color: #f8f9fa;
+    padding: 2px 4px;
+    border-radius: 4px;
+    font-family: "Courier New", Courier, monospace;
+  }
+
+  /* Tables */
+  article table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 1em;
+  }
+
+  article th,
+  article td {
+    border: 1px solid #e1e4e8;
+    padding: 8px;
+    text-align: left;
+  }
+
+  article th {
+    background-color: #f8f9fa;
+    font-weight: bold;
+  }
+</style>
+<Layout>
+  <a href="/">Back</a>
   <article>
+    <h1>{post.title.rendered}</h1>
     <Fragment set:html={post.content.rendered} />
   </article>
 </Layout>
