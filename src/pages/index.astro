@@ -1,4 +1,6 @@
 ---
+import GalleryComponent from "../components/Gallery.jsx";
+
 import Layout from "../layouts/Layout.astro";
 const query = `
   query GetPostsEdges {
@@ -74,15 +76,18 @@ const posts = await res.json();
   }
 </style>
 <Layout title="Astro + WordPress = Zero Js">
-  {
-    posts.data.posts.edges.map((post) => (
-      <article class="post">
-        <h2>{post.node.title}</h2>
-        <div class="excerpt" set:html={post.node.excerpt} />
-        <a href={post.node.slug} class="read-more">
-          Read more
-        </a>
-      </article>
-    ))
-  }
+  <GalleryComponent client:load />
+  <Fragment>
+    {
+      posts.data.posts.edges.map((post) => (
+        <article class="post">
+          <h2>{post.node.title}</h2>
+          <div class="excerpt" set:html={post.node.excerpt} />
+          <a href={post.node.slug} class="read-more">
+            Read more
+          </a>
+        </article>
+      ))
+    }
+  </Fragment>
 </Layout>

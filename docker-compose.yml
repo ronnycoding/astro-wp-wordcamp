@@ -15,6 +15,7 @@ services:
       - ./wp/wp-config.php:/var/www/html/wp-config.php
       - ./wp/wp-content:/var/www/html/wp-content
       - ./wp/db-backups:/var/www/html/db-backups
+      - wordpress:/var/www/html/
 
   wpcli:
     depends_on:
@@ -24,8 +25,8 @@ services:
     command: tail -f /dev/null
     volumes:
       - ./wp/wp-config.php:/var/www/html/wp-config.php
-      - ./wp/wp-content:/var/www/html/wp-content
-      - ./wp/db-backups:/var/www/html/db-backups
+      - wordpress:/var/www/html/
+
     environment:
       WORDPRESS_DB_HOST: db
       WORDPRESS_DB_USER: exampleuser
@@ -47,3 +48,4 @@ services:
 
 volumes:
   db:
+  wordpress:

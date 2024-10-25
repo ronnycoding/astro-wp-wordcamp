@@ -1,5 +1,7 @@
 ---
 import "./styles.css";
+import { ThemeModeScript } from "flowbite-react";
+import { ViewTransitions } from "astro:transitions";
 ---
 
 <!doctype html>
@@ -9,6 +11,8 @@ import "./styles.css";
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
+    <ThemeModeScript />
+    <ViewTransitions />
   </head>
 
   <body>

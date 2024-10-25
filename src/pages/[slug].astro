@@ -3,21 +3,78 @@ import Layout from "../layouts/Layout.astro";
 
 // if you want to fetch data at build time
 // const { slug } = Astro.params;
-// const res = await fetch(`http://localhost:8086/wp-json/wp/v2/posts?slug=${slug}`);
+// const res = await fetch(
+//   `http://localhost:8086/wp-json/wp/v2/posts?slug=${slug}`,
+// );
 // const [post] = await res.json();
 
+const query = `
+  query GetPostByUri($postUri: ID!) {
+    post(id: $postUri, idType: URI) {
+      id
+      title
+      uri
+      slug
+      date
+      content(format: RENDERED)
+      featuredImage {
+        node {
+          srcSet
+          sourceUrl
+          altText
+          mediaDetails {
+            height
+            width
+          }
+        }
+      }
+    }
+  }
+`;
+const res = await fetch("http://localhost:8086/graphql", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+  },
+  body: JSON.stringify({ query, variables: { postUri: Astro.params.slug } }),
+});
+const post = await res.json();
+
 // for static paths
-export async function getStaticPaths() {
-  let data = await fetch("http://localhost:8086/wp-json/wp/v2/posts");
-  let posts = await data.json();
+// export async function getStaticPaths() {
+//   // let data = await fetch("http://localhost:8086/wp-json/wp/v2/posts");
+//   // let posts = await data.json();
+//   //
+//   const query = `
+//     query GetPostsEdges {
+//       posts {
+//         edges {
+//           node {
+//             id
+//             title
+//             content(format: RENDERED)
+//             slug
+//           }
+//         }
+//       }
+//     }
+//   `;
+//   const res = await fetch("http://localhost:8086/graphql", {
+//     method: "POST",
+//     headers: {
+//       "Content-Type": "application/json",
+//     },
+//     body: JSON.stringify({ query }),
+//   });
+//   const response = await res.json();
 
-  return posts.map((post) => ({
-    params: { slug: post.slug },
-    props: { post: post },
-  }));
-}
+//   return response.data.posts.edges.map(({ node }) => ({
+//     params: { slug: node.slug },
+//     props: { post: node },
+//   }));
+// }
 
-const { post } = Astro.props;
+// const { post } = Astro.props;
 ---
 
 <style>
@@ -140,7 +197,8 @@ const { post } = Astro.props;
 <Layout>
   <a href="/">Back</a>
   <article>
-    <h1>{post.title.rendered}</h1>
-    <Fragment set:html={post.content.rendered} />
+    <pre>{JSON.stringify(post, null, 2)}</pre>
+    <!-- <h1>{post.title}</h1>
+    <Fragment set:html={post.content} /> -->
   </article>
 </Layout>
